@@ -133,7 +133,7 @@ def create_dicc_words(avoid_letters=[], avoid_words=[]):
 
     dicc_wordle = {}
 
-    with open("palabras_5_letras.txt", 'r') as file:
+    with open("palabras_5_letras.txt", 'r',encoding="utf8") as file:
 
         for word in file:
 

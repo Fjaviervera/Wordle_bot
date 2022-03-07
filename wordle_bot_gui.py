@@ -4,6 +4,13 @@ from wordle_solver import WorldeSolver
 import scraper_wordle
 from utils import create_dicc_words
 from tkinter import messagebox
+import webbrowser
+
+def mywordle_callback(url):
+    webbrowser.open_new(url)
+
+
+
 
 root= tk.Tk()
 root.title("Wordle Bot")
@@ -93,6 +100,11 @@ def popup_custom():
    
    button= tk.Button(top, text="Jugar", command=lambda:play_custom(entry))
    button.pack(pady=5, side= tk.TOP)
+
+
+   link1 = tk.Label(top, text="mywordle.strivemath.com", fg="blue", cursor="hand2")
+   link1.pack(pady=5,side= tk.BOTTOM)
+   link1.bind("<Button-1>", lambda e: mywordle_callback("https://mywordle.strivemath.com/"))
 
    
 tittle = tk.Label(text="WORDLE BOT",font='Roboto 24 bold',fg="#53a4c2")

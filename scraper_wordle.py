@@ -10,8 +10,11 @@ def open_game(url):
     option.add_argument("--incognito")
     option.add_argument('--ignore-certificate-errors')
     option.add_experimental_option("detach", True)
-    browser = webdriver.Chrome(
-        executable_path='/usr/bin/chromedriver', options=option)
+
+    browser = webdriver.Chrome('chromedriver_win32\chromedriver.exe', options=option)
+
+    # browser = webdriver.Chrome(
+    #     executable_path='/usr/bin/chromedriver', options=option)
     browser.get(url)
     return browser
 

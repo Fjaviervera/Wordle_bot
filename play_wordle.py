@@ -10,7 +10,7 @@ WORDLE_CUSTOM = "https://mywordle.strivemath.com/?word=rsvup&lang=sp"
 WORDLE_DAILY = "https://wordle.danielfrg.com/"
 
 
-wordle_url = WORDLE_CUSTOM
+wordle_url = WORDLE_DAILY
 
 browser = scraper_wordle.open_game(wordle_url)
 sleep(0.5)
@@ -44,7 +44,3 @@ for i in range(6):
     else:
         scraper_wordle.send_word_using_screen_board(word, browser)
 
-
-input("Press Enter to exit...")
-browser.close()
-browser.quit()
