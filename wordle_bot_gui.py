@@ -7,7 +7,6 @@ import scraper_wordle
 from utils import create_dicc_words
 import webbrowser
 
-# pyinstaller --specpath ./build --workpath ./build/build --distpath ./build/dist --onefile  --add-binary "../chromedriver_win32/chromedriver.exe;chromedriver_win32" --collect-data selenium  --add-data "../palabras_5_letras.txt;." --noconsole wordle_bot_gui.py
 
 root= tk.Tk()
 root.title("Wordle Bot")
