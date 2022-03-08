@@ -2,16 +2,27 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
+from utils import resource_path
+
+
+
+
 
 
 def open_game(url):
 
-    option = webdriver.ChromeOptions()
-    option.add_argument("--incognito")
-    option.add_argument('--ignore-certificate-errors')
-    option.add_experimental_option("detach", True)
 
-    browser = webdriver.Chrome('chromedriver_win32\chromedriver.exe', options=option)
+
+    options = webdriver.ChromeOptions()
+    options.add_argument("--incognito")
+    options.add_argument('--ignore-certificate-errors')
+    options.add_experimental_option("detach", True)
+    options.add_experimental_option('excludeSwitches', ['enable-logging'])
+
+    
+
+    browser = webdriver.Chrome(resource_path("chromedriver_win32/chromedriver.exe"), options=options)
+    
 
     # browser = webdriver.Chrome(
     #     executable_path='/usr/bin/chromedriver', options=option)

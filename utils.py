@@ -1,5 +1,14 @@
 import unicodedata
+import os
+import sys
 
+
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.dirname(__file__)
+    return os.path.join(base_path, relative_path)
 
 def simulate_game(true_word, tried_words):
 
@@ -133,7 +142,7 @@ def create_dicc_words(avoid_letters=[], avoid_words=[]):
 
     dicc_wordle = {}
 
-    with open("palabras_5_letras.txt", 'r',encoding="utf8") as file:
+    with open(resource_path("palabras_5_letras.txt"), 'r',encoding="utf8") as file:
 
         for word in file:
 
@@ -173,7 +182,7 @@ def create_dicc_words(avoid_letters=[], avoid_words=[]):
 def create_all_words_test():
 
     all_words = []
-    with open("palabras_5_letras.txt", 'r') as file:
+    with open(resource_path("palabras_5_letras.txt"), 'r') as file:
 
         for word in file:
 
