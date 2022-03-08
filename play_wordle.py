@@ -21,6 +21,7 @@ if 'strivemath' not in wordle_url:
     sleep(0.5)
     dicc_wordle = create_dicc_words()
 else:
+    # custom wordle is not compatible with ñ and some words, probable this isn't all of them
     dicc_wordle = create_dicc_words(avoid_letters=["ñ"], avoid_words=[
                                     "zungo", "vinto", "depto", "putre", "tunja", "tupac"])
 

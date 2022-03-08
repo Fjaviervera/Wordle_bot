@@ -23,9 +23,6 @@ def open_game(url):
 
     browser = webdriver.Chrome(resource_path("chromedriver_win32/chromedriver.exe"), options=options)
     
-
-    # browser = webdriver.Chrome(
-    #     executable_path='/usr/bin/chromedriver', options=option)
     browser.get(url)
     return browser
 
