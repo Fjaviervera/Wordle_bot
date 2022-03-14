@@ -6,6 +6,8 @@ from joblib import Parallel, delayed
 
 num_cores = multiprocessing.cpu_count()
 
+
+
 class WordleSolver():
 
     def __init__(self, dicc,mode = "fast",parallel_sim = True) -> None:

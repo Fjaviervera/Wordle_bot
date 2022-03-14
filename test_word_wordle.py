@@ -8,10 +8,10 @@ dicc_wordle = create_dicc_words()
 
 
 start = time.time()
-solver_wordler = WordleSolver(dicc_wordle, parallel_sim=True,mode = "fast")
+solver_wordler = WordleSolver(dicc_wordle, parallel_sim=True,mode = "slow")
 
 
-word_true = "piste"
+word_true = "acudo"
 
 guesses_words = []
 correct = False

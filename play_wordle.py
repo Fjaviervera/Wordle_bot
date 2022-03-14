@@ -1,20 +1,20 @@
-from time import sleep
+from time import sleep, time
 from wordle_solver import WordleSolver
 import scraper_wordle
 from utils import create_dicc_words
 
 
 
-WORDLE_CUSTOM = "https://mywordle.strivemath.com/?word=bwqdd&lang=sp"
+WORDLE_CUSTOM = "https://mywordle.strivemath.com/?word=wqlgz&lang=sp"
 
 WORDLE_DAILY = "https://wordle.danielfrg.com/"
 
 
-wordle_url = WORDLE_CUSTOM
+wordle_url = WORDLE_DAILY
 
 browser = scraper_wordle.open_game(wordle_url)
 sleep(0.5)
-
+start = time()
 if 'strivemath' not in wordle_url:
 
     scraper_wordle.start(browser)
@@ -45,3 +45,5 @@ for i in range(6):
     else:
         scraper_wordle.send_word_using_screen_board(word, browser)
 
+end = time()
+print("time to solve: %f"%(end-start))
