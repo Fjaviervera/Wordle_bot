@@ -5,12 +5,12 @@ from utils import create_dicc_words
 
 
 
-WORDLE_CUSTOM = "https://mywordle.strivemath.com/?word=rsvup&lang=sp"
+WORDLE_CUSTOM = "https://mywordle.strivemath.com/?word=bwqdd&lang=sp"
 
 WORDLE_DAILY = "https://wordle.danielfrg.com/"
 
 
-wordle_url = WORDLE_DAILY
+wordle_url = WORDLE_CUSTOM
 
 browser = scraper_wordle.open_game(wordle_url)
 sleep(0.5)
@@ -23,7 +23,7 @@ if 'strivemath' not in wordle_url:
 else:
     # custom wordle is not compatible with ñ and some words, probable this isn't all of them
     dicc_wordle = create_dicc_words(avoid_letters=["ñ"], avoid_words=[
-                                    "zungo", "vinto", "depto", "putre", "tunja", "tupac"])
+                                    "zungo", "vinto", "depto", "putre", "tunja", "tupac","gomez","hazte","gafez"])
 
 solver_wordler = WordleSolver(dicc_wordle)
 

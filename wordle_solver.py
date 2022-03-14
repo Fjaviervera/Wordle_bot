@@ -8,14 +8,20 @@ num_cores = multiprocessing.cpu_count()
 
 class WordleSolver():
 
-    def __init__(self, dicc) -> None:
+    def __init__(self, dicc,parallel_sim = True) -> None:
 
         self.words_dicc = dicc
+        self.parallel_sim = parallel_sim
         self.words_tested = []
         self.possible_words_to_fish = self.get_possible_words(
             {"with_position": [], "presents": [], "not_presents": []})
-        self._th_to_simulate = 1000
-        self._n_to_rank = 50
+        if self.parallel_sim:
+            self._th_to_simulate = 1000
+            self._n_to_rank = 50
+        else:
+            self._th_to_simulate = 100
+            self._n_to_rank = 20
+
 
     def check_correct_word(self, game_state):
         if len(game_state["with_position"]) == 5:
@@ -175,8 +181,12 @@ class WordleSolver():
 
                 if len(possible_words) < self._th_to_simulate:
 
-                    possible_words_to_fish = self.simulate_most_possible_words_to_fish_parallel(
-                        possible_words_to_fish, possible_words, ranking=self._n_to_rank)
+                    if self.parallel_sim:
+                        possible_words_to_fish = self.simulate_most_possible_words_to_fish_parallel(
+                            possible_words_to_fish, possible_words, ranking=self._n_to_rank)
+                    else:
+                        possible_words_to_fish = self.simulate_most_possible_words_to_fish(
+                            possible_words_to_fish, possible_words, ranking=self._n_to_rank)
 
                 for word in possible_words_to_fish:
                     if word in self.words_tested:
