@@ -10,8 +10,8 @@ num_cores = multiprocessing.cpu_count()
 
 class WordleSolver():
 
-    def __init__(self, dicc,mode = "fast",parallel_sim = True) -> None:
-
+    def __init__(self, dicc,mode = "fast",parallel_sim = True):
+        
         self.words_dicc = dicc
         self.parallel_sim = parallel_sim
         self.words_tested = []
@@ -112,7 +112,6 @@ class WordleSolver():
         return results
 
     def simulate_most_possible_words_to_fish_parallel(self, possible_words_to_fish, possible_words, ranking):
-
 
 
         list_candidates_results = Parallel(n_jobs=num_cores)(delayed(self.simulate_candidate)(candidate,possible_words) 

@@ -6,14 +6,8 @@ from wordle_solver import WordleSolver
 import scraper_wordle
 from utils import create_dicc_words
 import webbrowser
-
-
-root= tk.Tk()
-root.title("Wordle Bot")
-canvas = tk.Canvas(root, width =400, height = 250)
-canvas.pack()
-browser = None
-roboto = font.Font(family='Roboto')
+import sys
+import multiprocessing
 
 def on_close():
 
@@ -41,7 +35,7 @@ def play_daily():
     scraper_wordle.start(browser)
     sleep(0.5)
     dicc_wordle = create_dicc_words()
-    solver_wordler = WordleSolver(dicc_wordle)
+    solver_wordler = WordleSolver(dicc_wordle, parallel_sim=False)
 
     for _ in range(6):
 
@@ -101,7 +95,8 @@ def insert_val(e):
     e.insert(0, root.clipboard_get())
     
 def popup_custom():
-   
+
+   roboto = font.Font(family='Roboto')
    top= tk.Toplevel(canvas)
 
    x =root.winfo_x()
@@ -124,17 +119,26 @@ def popup_custom():
    link.bind("<Button-1>", lambda e: mywordle_callback("https://mywordle.strivemath.com/"))
 
    
-tittle = tk.Label(text="WORDLE BOT",font='Roboto 26 bold',fg="#53a4c2")
-    
-button_daily = tk.Button(text='Jugar Wordle Diario', command=play_daily,font=roboto)
-button_custom = tk.Button(text='Jugar Wordle Personalizado', command=popup_custom,font=roboto)
 
 
-canvas.create_window( 200, 70, window=tittle)
-canvas.create_window(200, 140, window=button_daily)
-canvas.create_window(200, 200, window=button_custom)
+if __name__ == '__main__':
 
-root.eval('tk::PlaceWindow . center')
-root.protocol("WM_DELETE_WINDOW",  on_close)
-root.mainloop()
+    root= tk.Tk()
+    root.title("Wordle Bot")
+    canvas = tk.Canvas(root, width =400, height = 250)
+    canvas.pack()
+    browser = None
+
+    tittle = tk.Label(text="WORDLE BOT",font='Roboto 26 bold',fg="#53a4c2")
+    roboto = font.Font(family='Roboto')
+    button_daily = tk.Button(text='Jugar Wordle Diario', command=play_daily,font=roboto)
+    button_custom = tk.Button(text='Jugar Wordle Personalizado', command=popup_custom,font=roboto)
+
+    canvas.create_window( 200, 70, window=tittle)
+    canvas.create_window(200, 140, window=button_daily)
+    canvas.create_window(200, 200, window=button_custom)
+
+    root.eval('tk::PlaceWindow . center')
+    root.protocol("WM_DELETE_WINDOW",  on_close)
+    root.mainloop()
 
