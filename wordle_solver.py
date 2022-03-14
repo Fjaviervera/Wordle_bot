@@ -8,7 +8,7 @@ num_cores = multiprocessing.cpu_count()
 
 class WordleSolver():
 
-    def __init__(self, dicc,mode = "slow",parallel_sim = True) -> None:
+    def __init__(self, dicc,mode = "fast",parallel_sim = True) -> None:
 
         self.words_dicc = dicc
         self.parallel_sim = parallel_sim
@@ -18,14 +18,17 @@ class WordleSolver():
 
         if mode == "slow":
             self._th_to_simulate = [1000,100]
-            self._n_to_rank = [20,100]
+            self._n_to_rank = [100,200]
+        elif mode == "ultra-slow":
+            self._th_to_simulate = [1000,100]
+            self._n_to_rank = [500,1000]
         elif mode == "fast":
-            self._th_to_simulate = [100,20]
-            self._n_to_rank = [5,10]
+            self._th_to_simulate = [1000,100]
+            self._n_to_rank = [20,100]
         else:
             print("Unrecognized mode, using fast")
-            self._th_to_simulate = [100,20]
-            self._n_to_rank = [5,10]
+            self._th_to_simulate = [1000,100]
+            self._n_to_rank = [20,100]
     
     def check_correct_word(self, game_state):
         if len(game_state["with_position"]) == 5:

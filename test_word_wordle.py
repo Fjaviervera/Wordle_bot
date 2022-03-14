@@ -8,10 +8,10 @@ dicc_wordle = create_dicc_words()
 
 
 start = time.time()
-solver_wordler = WordleSolver(dicc_wordle, parallel_sim=True,mode = "slow")
+solver_wordler = WordleSolver(dicc_wordle, parallel_sim=True,mode = "fast")
 
 
-word_true = "vahar"
+word_true = "piste"
 
 guesses_words = []
 correct = False

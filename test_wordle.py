@@ -9,13 +9,8 @@ import time
 correct_words = []
 fail_words = []
 
-# all_words = create_all_words_test()
-# shuffle(all_words)
-
-all_words = ['vahar', 'havar', 'fizas', 'fogar', 'capas', 'pavas', 'salso', 'faces', 'rajar', 'hayas', 'sisas', 'fabas', 'bisas', 'sajes', 'fajar', 'sabas', 'chaco', 'sallo', 'ahoyo', 'sexas', 'ajoro', 'peñas', 'caces', 'rayar', 'gayes', 'fajas', 'ajara', 'nanga', 'bofas', 'fañar']
-
-
-
+all_words = create_all_words_test()
+shuffle(all_words)
 
 
 words_used = {}
