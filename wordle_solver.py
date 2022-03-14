@@ -8,21 +8,25 @@ num_cores = multiprocessing.cpu_count()
 
 class WordleSolver():
 
-    def __init__(self, dicc,parallel_sim = True) -> None:
+    def __init__(self, dicc,mode = "slow",parallel_sim = True) -> None:
 
         self.words_dicc = dicc
         self.parallel_sim = parallel_sim
         self.words_tested = []
         self.possible_words_to_fish = self.get_possible_words(
             {"with_position": [], "presents": [], "not_presents": []})
-        if self.parallel_sim:
-            self._th_to_simulate = 1000
-            self._n_to_rank = 50
+
+        if mode == "slow":
+            self._th_to_simulate = [1000,100]
+            self._n_to_rank = [20,100]
+        elif mode == "fast":
+            self._th_to_simulate = [100,20]
+            self._n_to_rank = [5,10]
         else:
-            self._th_to_simulate = 100
-            self._n_to_rank = 20
-
-
+            print("Unrecognized mode, using fast")
+            self._th_to_simulate = [100,20]
+            self._n_to_rank = [5,10]
+    
     def check_correct_word(self, game_state):
         if len(game_state["with_position"]) == 5:
             return True
@@ -179,14 +183,23 @@ class WordleSolver():
                 possible_words_to_fish = self.get_most_possible_words_to_fish(
                     possible_words, letters_to_avoid_count)
 
-                if len(possible_words) < self._th_to_simulate:
+                if len(possible_words) < self._th_to_simulate[0]:
+                    
+                    if len(possible_words)<self._th_to_simulate[1]: 
+                        rank = self._n_to_rank[1]
+                    else:
+                        rank = self._n_to_rank[0]
 
                     if self.parallel_sim:
                         possible_words_to_fish = self.simulate_most_possible_words_to_fish_parallel(
-                            possible_words_to_fish, possible_words, ranking=self._n_to_rank)
+                            possible_words_to_fish, possible_words, ranking=rank)
                     else:
                         possible_words_to_fish = self.simulate_most_possible_words_to_fish(
-                            possible_words_to_fish, possible_words, ranking=self._n_to_rank)
+                            possible_words_to_fish, possible_words, ranking=rank)
+
+               
+
+
 
                 for word in possible_words_to_fish:
                     if word in self.words_tested:

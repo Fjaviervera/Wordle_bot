@@ -1,5 +1,5 @@
 from wordle_solver import WordleSolver
-from utils import create_dicc_words, create_all_words_test, simulate_game,prints_most_used_words
+from utils import create_dicc_words,simulate_game
 import time
 
 words_used = {}
@@ -8,10 +8,10 @@ dicc_wordle = create_dicc_words()
 
 
 start = time.time()
-solver_wordler = WordleSolver(dicc_wordle)
+solver_wordler = WordleSolver(dicc_wordle, parallel_sim=True,mode = "slow")
 
 
-word_true = "capas"
+word_true = "vahar"
 
 guesses_words = []
 correct = False

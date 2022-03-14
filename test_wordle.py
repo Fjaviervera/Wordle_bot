@@ -9,8 +9,14 @@ import time
 correct_words = []
 fail_words = []
 
-all_words = create_all_words_test()
-shuffle(all_words)
+# all_words = create_all_words_test()
+# shuffle(all_words)
+
+all_words = ['vahar', 'havar', 'fizas', 'fogar', 'capas', 'pavas', 'salso', 'faces', 'rajar', 'hayas', 'sisas', 'fabas', 'bisas', 'sajes', 'fajar', 'sabas', 'chaco', 'sallo', 'ahoyo', 'sexas', 'ajoro', 'peñas', 'caces', 'rayar', 'gayes', 'fajas', 'ajara', 'nanga', 'bofas', 'fañar']
+
+
+
+
 
 words_used = {}
 
@@ -20,7 +26,7 @@ dicc_wordle = create_dicc_words()
 for n, word_true in enumerate(all_words):
     start = time.time()
     print("%d/%d" % (n+1, len(all_words)))
-    solver_wordler = WordleSolver(dicc_wordle)
+    solver_wordler = WordleSolver(dicc_wordle, mode="slow")
     print(word_true)
     guesses_words = []
     correct = False
