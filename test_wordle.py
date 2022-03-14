@@ -1,7 +1,10 @@
 from wordle_solver import WordleSolver
-from utils import create_dicc_words, create_all_words_test, simulate_game
+from utils import create_dicc_words, create_all_words_test, simulate_game,prints_most_used_words
 
 from random import shuffle
+import time
+
+
 
 correct_words = []
 fail_words = []
@@ -9,10 +12,13 @@ fail_words = []
 all_words = create_all_words_test()
 shuffle(all_words)
 
+words_used = {}
+
 
 dicc_wordle = create_dicc_words()
 
 for n, word_true in enumerate(all_words):
+    start = time.time()
     print("%d/%d" % (n+1, len(all_words)))
     solver_wordler = WordleSolver(dicc_wordle)
     print(word_true)
@@ -23,6 +29,11 @@ for n, word_true in enumerate(all_words):
         game_state = simulate_game(word_true, guesses_words)
 
         word = solver_wordler.guess_word(game_state, debug=False)
+
+        if word in words_used.keys():
+            words_used[word]+=1
+        else:
+            words_used[word]=1
 
         guesses_words.append(word)
 
@@ -35,6 +46,11 @@ for n, word_true in enumerate(all_words):
     else:
         fail_words.append(word_true)
 
+    end = time.time()
+    print("time to solve: %f"%(end-start))
+
+
+    # prints_most_used_words(words_used)
     print("correct words: %d" % (len(correct_words)))
     print("failed words: %d" % (len(fail_words)))
     print(fail_words)

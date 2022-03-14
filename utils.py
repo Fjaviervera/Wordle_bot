@@ -196,3 +196,9 @@ def create_all_words_test():
             all_words.append(word)
     all_words = list(set(all_words))
     return all_words
+
+
+def prints_most_used_words(words_dicc,th = 5):
+    for word in words_dicc.keys():
+        if words_dicc[word]>th:
+            print("%s : %d"%(word,words_dicc[word]))

@@ -1,5 +1,10 @@
 from utils import *
 
+import multiprocessing
+from joblib import Parallel, delayed
+
+
+num_cores = multiprocessing.cpu_count()
 
 class WordleSolver():
 
@@ -9,8 +14,8 @@ class WordleSolver():
         self.words_tested = []
         self.possible_words_to_fish = self.get_possible_words(
             {"with_position": [], "presents": [], "not_presents": []})
-        self._th_to_simulate = 100
-        self._n_to_rank = 10
+        self._th_to_simulate = 1000
+        self._n_to_rank = 50
 
     def check_correct_word(self, game_state):
         if len(game_state["with_position"]) == 5:
@@ -71,13 +76,48 @@ class WordleSolver():
 
         return order_list_using_ref(self.possible_words_to_fish, letter_count_in_possible_words)
 
+    def simulate_round_game(self,results,candidate,target,num_possible_words):
+
+        guesses_words = self.words_tested + [candidate]
+
+        game_state = simulate_game(target, guesses_words)
+
+        possible_words_simulation = self.get_possible_words(game_state)
+
+        results += num_possible_words - len(possible_words_simulation)
+        return results
+
+    def simulate_candidate(self,candidate,possible_words):
+        results = 0
+
+        for target in possible_words:
+
+            results = self.simulate_round_game(results,candidate,target,len(possible_words))
+
+        return results
+
+    def simulate_most_possible_words_to_fish_parallel(self, possible_words_to_fish, possible_words, ranking):
+
+
+
+        list_candidates_results = Parallel(n_jobs=num_cores)(delayed(self.simulate_candidate)(candidate,possible_words) 
+                                                        for candidate in possible_words_to_fish[0:ranking])
+
+        words_ranked = order_list_using_ref(
+            possible_words_to_fish[0:ranking], list_candidates_results)
+
+        return words_ranked
+
+
     def simulate_most_possible_words_to_fish(self, possible_words_to_fish, possible_words, ranking):
 
         list_candidates_results = []
 
         for candidate in possible_words_to_fish[0:ranking]:
             results = 0
+
             for target in possible_words:
+
                 guesses_words = self.words_tested + [candidate]
 
                 game_state = simulate_game(target, guesses_words)
@@ -92,6 +132,8 @@ class WordleSolver():
             possible_words_to_fish[0:ranking], list_candidates_results)
 
         return words_ranked
+
+
 
     def guess_word(self, game_state, debug=False):
 
@@ -133,7 +175,7 @@ class WordleSolver():
 
                 if len(possible_words) < self._th_to_simulate:
 
-                    possible_words_to_fish = self.simulate_most_possible_words_to_fish(
+                    possible_words_to_fish = self.simulate_most_possible_words_to_fish_parallel(
                         possible_words_to_fish, possible_words, ranking=self._n_to_rank)
 
                 for word in possible_words_to_fish:
