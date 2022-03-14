@@ -1,4 +1,4 @@
-from wordle_solver import WorldeSolver
+from wordle_solver import WordleSolver
 from utils import create_dicc_words, create_all_words_test, simulate_game
 
 from random import shuffle
@@ -14,7 +14,7 @@ dicc_wordle = create_dicc_words()
 
 for n, word_true in enumerate(all_words):
     print("%d/%d" % (n+1, len(all_words)))
-    solver_wordler = WorldeSolver(dicc_wordle)
+    solver_wordler = WordleSolver(dicc_wordle)
     print(word_true)
     guesses_words = []
     correct = False

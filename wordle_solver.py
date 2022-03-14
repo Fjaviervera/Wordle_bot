@@ -1,7 +1,7 @@
 from utils import *
 
 
-class WorldeSolver():
+class WordleSolver():
 
     def __init__(self, dicc) -> None:
 

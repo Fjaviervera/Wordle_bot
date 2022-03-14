@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 import tkinter.font as font
 from time import sleep
-from wordle_solver import WorldeSolver
+from wordle_solver import WordleSolver
 import scraper_wordle
 from utils import create_dicc_words
 import webbrowser
@@ -41,7 +41,7 @@ def play_daily():
     scraper_wordle.start(browser)
     sleep(0.5)
     dicc_wordle = create_dicc_words()
-    solver_wordler = WorldeSolver(dicc_wordle)
+    solver_wordler = WordleSolver(dicc_wordle)
 
     for _ in range(6):
 
@@ -78,7 +78,7 @@ def play_custom(entry):
                                         "zungo", "vinto", "depto", "putre", "tunja", "tupac","jordi"])
         
 
-        solver_wordler = WorldeSolver(dicc_wordle)
+        solver_wordler = WordleSolver(dicc_wordle)
 
         for _ in range(6):
 
