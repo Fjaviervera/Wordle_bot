@@ -1,7 +1,7 @@
 from time import sleep, time
 from wordle_solver import WordleSolver
 import scraper_wordle
-from utils import create_words_dicc
+from utils import create_words_list_from_txt
 
 
 
@@ -12,20 +12,24 @@ WORDLE_DAILY = "https://wordle.danielfrg.com/"
 
 wordle_url = WORDLE_DAILY
 
+
 browser = scraper_wordle.open_game(wordle_url)
 sleep(0.5)
 start = time()
+
+
 if 'strivemath' not in wordle_url:
 
     scraper_wordle.start(browser)
     sleep(0.5)
-    dicc_wordle = create_words_dicc(words_length = 5, avoid_letters = [],avoid_words = [])
+    words_list = create_words_list_from_txt("palabras_5_letras.txt",avoid_letters = [],avoid_words = [])
 else:
     # custom wordle is not compatible with ñ and some words, probable this isn't all of them
-    dicc_wordle = create_words_dicc(words_length = 5, avoid_letters = ["ñ"],avoid_words = ["zungo", "vinto", "depto", "putre", "tunja", "tupac","gomez","hazte","gafez"])
+    words_list = create_words_list_from_txt("palabras_5_letras.txt",avoid_letters = ["ñ"],avoid_words = ["zungo", "vinto", "depto", "putre", "tunja", "tupac","gomez","hazte","gafez"])
+    
     
 
-solver_wordler = WordleSolver(dicc_wordle, mode="ultra-slow")
+solver_wordler = WordleSolver(words_list)
 
 for i in range(6):
 

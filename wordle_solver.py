@@ -10,9 +10,9 @@ num_cores = multiprocessing.cpu_count()
 
 class WordleSolver():
 
-    def __init__(self, dicc,mode = "fast",parallel_sim = True):
+    def __init__(self, words_list,mode = "fast",parallel_sim = True):
         
-        self.words_dicc = dicc
+        self.generate_dicc_from_list(words_list)
         self.parallel_sim = parallel_sim
         self.words_tested = []
         self.possible_words_to_fish = self.get_possible_words(
@@ -32,6 +32,37 @@ class WordleSolver():
             self._th_to_simulate = [1000,100]
             self._n_to_rank = [20,100]
     
+    def generate_dicc_from_list(self,words_list):
+        
+        self.words_dicc = {}
+
+        for word in words_list:
+
+            word = word.strip()
+            word = word.lower()
+            word = word.replace("ñ", "#").replace("Ñ", "%")
+            word = unicodedata.normalize("NFKD", word)\
+                .encode("ascii", "ignore").decode("ascii")\
+                .replace("#", "ñ").replace("%", "Ñ")
+
+
+            for index_letter, letter in enumerate(word):
+                if letter not in self.words_dicc.keys():
+                    self.words_dicc[letter] = []
+                    self.words_dicc[letter].append(word)
+                else:
+                    self.words_dicc[letter].append(word)
+
+                if letter + str(index_letter) not in self.words_dicc.keys():
+                    self.words_dicc[letter + str(index_letter)] = []
+                    self.words_dicc[letter + str(index_letter)].append(word)
+                else:
+                    self.words_dicc[letter + str(index_letter)].append(word)
+
+        for key in self.words_dicc.keys():
+            self.words_dicc[key] = list(set(self.words_dicc[key]))
+
+
     def check_correct_word(self, game_state):
         if len(game_state["with_position"]) == 5:
             return True

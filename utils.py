@@ -79,33 +79,6 @@ def simulate_game(true_word, tried_words):
     return game_state
 
 
-def create_dicc_from_words(list_of_words, len_word=5):
-    dicc_words = {}
-    for word in list_of_words:
-
-        if(len(word) == len_word):
-
-            word = word.replace("ñ", "#").replace("Ñ", "%")
-            word = unicodedata.normalize("NFKD", word)\
-                .encode("ascii", "ignore").decode("ascii")\
-                .replace("#", "ñ").replace("%", "Ñ")
-
-            for index_letter, letter in enumerate(word):
-                if letter not in dicc_words.keys():
-                    dicc_words[letter] = []
-                    dicc_words[letter].append(word)
-                elif word not in dicc_words[letter]:
-                    dicc_words[letter].append(word)
-
-                if letter + str(index_letter) not in dicc_words.keys():
-                    dicc_words[letter + str(index_letter)] = []
-                    dicc_words[letter + str(index_letter)].append(word)
-                elif word not in dicc_words[letter + str(index_letter)]:
-                    dicc_words[letter + str(index_letter)].append(word)
-
-    return dicc_words
-
-
 def union_lists(list_of_words):
 
     return set.union(*[set(item) for item in list_of_words])
@@ -138,47 +111,6 @@ def order_list_using_ref(list_to_order, ref):
     return ordered_list
 
 
-def create_dicc_words_deprecated(avoid_letters=[], avoid_words=[]):
-
-    dicc_wordle = {}
-
-    with open(resource_path("palabras_5_letras.txt"), 'r',encoding="utf8") as file:
-
-        for word in file:
-
-            word = word.strip()
-            word = word.lower()
-            word = word.replace("ñ", "#").replace("Ñ", "%")
-            word = unicodedata.normalize("NFKD", word)\
-                .encode("ascii", "ignore").decode("ascii")\
-                .replace("#", "ñ").replace("%", "Ñ")
-
-            for avoid_letter in avoid_letters:
-                if avoid_letter in word:
-                    avoid_words.append(word)
-
-            if word in avoid_words:
-                continue
-
-            for index_letter, letter in enumerate(word):
-                if letter not in dicc_wordle.keys():
-                    dicc_wordle[letter] = []
-                    dicc_wordle[letter].append(word)
-                else:
-                    dicc_wordle[letter].append(word)
-
-                if letter + str(index_letter) not in dicc_wordle.keys():
-                    dicc_wordle[letter + str(index_letter)] = []
-                    dicc_wordle[letter + str(index_letter)].append(word)
-                else:
-                    dicc_wordle[letter + str(index_letter)].append(word)
-
-    for key in dicc_wordle.keys():
-        dicc_wordle[key] = list(set(dicc_wordle[key]))
-
-    return dicc_wordle
-
-
 def has_numbers(input_string):
      return any(char.isdigit() for char in input_string)
 
@@ -186,10 +118,9 @@ def has_avoid_letters(avoid_letters,input_string):
     return any(char in input_string for char in avoid_letters)
 
 
-def create_words_dicc(words_length = 5, avoid_letters = [],avoid_words = []):
+def create_words_list_from_csv(words_length = 5, avoid_letters = [],avoid_words = []):
 
-    dicc_wordle = {}
-    words = [] + avoid_words
+    words = []
     with open('rae_words.csv') as csv_file:
         
         csv_reader = csv.reader(csv_file, delimiter=',')
@@ -209,40 +140,18 @@ def create_words_dicc(words_length = 5, avoid_letters = [],avoid_words = []):
                     .encode("ascii", "ignore").decode("ascii")\
                     .replace("#", "ñ").replace("%", "Ñ")
 
-                if word not in words:
+                if word not in words and not word in avoid_words:
 
                     words.append(word)
 
-                    for index_letter, letter in enumerate(word):
-                        if letter not in dicc_wordle.keys():
-                            dicc_wordle[letter] = []
-                            dicc_wordle[letter].append(word)
-                        else:
-                            dicc_wordle[letter].append(word)
 
-                        if letter + str(index_letter) not in dicc_wordle.keys():
-                            dicc_wordle[letter + str(index_letter)] = []
-                            dicc_wordle[letter + str(index_letter)].append(word)
-                        else:
-                            dicc_wordle[letter + str(index_letter)].append(word)
+    return words
 
 
+def create_words_list_from_txt(words_txt,avoid_letters = [],avoid_words = []):
 
-
-
-    print(f'number of words with length {words_length}: {len(words) - len(avoid_words)}')
-    
-    for key in dicc_wordle.keys():
-        dicc_wordle[key] = list(set(dicc_wordle[key]))
-
-    return dicc_wordle
-
-
-
-def create_all_words_test():
-
-    all_words = []
-    with open(resource_path("palabras_5_letras.txt"), 'r') as file:
+    words = []
+    with open(resource_path(words_txt), 'r') as file:
 
         for word in file:
 
@@ -252,10 +161,13 @@ def create_all_words_test():
             word = unicodedata.normalize("NFKD", word)\
                 .encode("ascii", "ignore").decode("ascii")\
                 .replace("#", "ñ").replace("%", "Ñ")
+            
+            if  not has_avoid_letters(avoid_letters,word) and word not in avoid_words:
 
-            all_words.append(word)
-    all_words = list(set(all_words))
-    return all_words
+                words.append(word)
+
+    words = list(set(words))
+    return words
 
 
 def prints_most_used_words(words_dicc,th = 5):
