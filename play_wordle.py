@@ -5,7 +5,7 @@ from utils import create_words_list_from_txt,create_words_txt_from_csv
 
 
 
-WORDLE_CUSTOM = "https://mywordle.strivemath.com/?word=loadcs&lang=sp"
+WORDLE_CUSTOM = "https://mywordle.strivemath.com/?word=dclvp"
 
 WORDLE_DAILY = "https://wordle.danielfrg.com/"
 
@@ -27,7 +27,7 @@ if 'strivemath' not in wordle_url:
     words_list = create_words_list_from_txt("palabras_5_letras.txt",avoid_letters = [],avoid_words = [])
 else:
     # custom wordle is not compatible with ñ and some words, probable this isn't all of them
-    words_list = create_words_list_from_txt("palabras_6_letras.txt",avoid_letters = ["ñ"],avoid_words = [])
+    words_list = create_words_list_from_txt("words_5_letters.txt",avoid_letters = ["ñ"],avoid_words = [])
     
 # words to avoid when using 5 letters
 # avoid_words = ["zungo", "vinto", "depto", "putre", "tunja", "tupac","gomez","hazte","gafez"])

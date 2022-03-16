@@ -192,7 +192,7 @@ def create_words_list_from_txt(words_txt,avoid_letters = [],avoid_words = []):
                 .encode("ascii", "ignore").decode("ascii")\
                 .replace("#", "ñ").replace("%", "Ñ")
             
-            if  not has_avoid_letters(avoid_letters,word) and word not in avoid_words:
+            if  not has_avoid_letters(avoid_letters,word) and word not in avoid_words and len(word)>0:
 
                 words.append(word)
 
