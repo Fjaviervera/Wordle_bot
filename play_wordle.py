@@ -1,7 +1,7 @@
 from time import sleep, time
 from wordle_solver import WordleSolver
 import scraper_wordle
-from utils import create_words_list_from_txt,create_words_txt_from_csv
+from utils import create_words_list_from_txt
 
 
 

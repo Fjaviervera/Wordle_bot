@@ -129,7 +129,7 @@ class WordleSolver():
 
         for index in range(len(self.possible_words_to_fish)):
             letter_count = 0
-            letters_counted = ["a", "e", "i" , "o" , "u"]
+            letters_counted = []
             for pos,letter in enumerate(self.possible_words_to_fish[index]):
                 if letter in dicc_count_letters.keys():
                     if letter not in letters_counted:
