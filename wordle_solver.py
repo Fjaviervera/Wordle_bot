@@ -12,6 +12,8 @@ class WordleSolver():
 
     def __init__(self, words_list,mode = "fast",parallel_sim = True):
         
+
+        self.words_length = len(words_list[0])
         self.generate_dicc_from_list(words_list)
         self.parallel_sim = parallel_sim
         self.words_tested = []
@@ -64,7 +66,7 @@ class WordleSolver():
 
 
     def check_correct_word(self, game_state):
-        if len(game_state["with_position"]) == 5:
+        if len(game_state["with_position"]) == self.words_length:
             return True
         else:
             return False
@@ -99,7 +101,7 @@ class WordleSolver():
 
     def get_most_possible_words_to_fish(self, word_list, avoid_letters=[]):
 
-        words_dicc = create_dicc_from_words(word_list)
+        words_dicc = create_dicc_from_words(word_list, len_word=self.words_length )
         dicc_count_letters = {}
         for letter in words_dicc.keys():
             if len(letter) == 1 and letter not in avoid_letters:

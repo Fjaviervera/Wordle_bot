@@ -67,17 +67,19 @@ def send_word_using_screen_board(word, browser):
 
 def read_game_custom(browser):
 
+    
+
     game_html = browser.find_elements(
         By.XPATH, "//div[@class='flex justify-center mb-1']/div")
-
+    words_length = int(len(game_html)/6)
     game_state = {"with_position": [], "presents": [], "not_presents": []}
-    for index_words in range(0, len(game_html), 5):
+    for index_words in range(0, len(game_html), words_length):
         #  0 is grey
         #  1 is yellow
         #  2 is green
         row = {"boxes": [], "green_letters": {}, "yellow_letters": {}}
 
-        for index, letter_html in enumerate(game_html[index_words:index_words + 5]):
+        for index, letter_html in enumerate(game_html[index_words:index_words + words_length]):
             letter_box = {}
 
             if letter_html.text != "":
@@ -111,15 +113,17 @@ def read_game_daily(browser):
 
     game_html = browser.find_elements(
         By.XPATH, "//div[@class='react-card-back']/div")
+        
+    words_length = int(len(game_html)/6)
 
     game_state = {"with_position": [], "presents": [], "not_presents": []}
-    for index_words in range(0, len(game_html), 5):
+    for index_words in range(0, len(game_html), words_length):
         #  0 is grey
         #  1 is yellow
         #  2 is green
         row = {"boxes": [], "green_letters": {}, "yellow_letters": {}}
 
-        for index, letter_html in enumerate(game_html[index_words:index_words + 5]):
+        for index, letter_html in enumerate(game_html[index_words:index_words + words_length]):
             letter_box = {}
 
             if letter_html.text != "":

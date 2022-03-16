@@ -117,8 +117,34 @@ def has_numbers(input_string):
 def has_avoid_letters(avoid_letters,input_string):
     return any(char in input_string for char in avoid_letters)
 
+def create_dicc_from_words(list_of_words, len_word=5):
+    dicc_words = {}
+    for word in list_of_words:
 
-def create_words_list_from_csv(words_length = 5, avoid_letters = [],avoid_words = []):
+        if(len(word) == len_word):
+
+            word = word.replace("ñ", "#").replace("Ñ", "%")
+            word = unicodedata.normalize("NFKD", word)\
+                .encode("ascii", "ignore").decode("ascii")\
+                .replace("#", "ñ").replace("%", "Ñ")
+
+            for index_letter, letter in enumerate(word):
+                if letter not in dicc_words.keys():
+                    dicc_words[letter] = []
+                    dicc_words[letter].append(word)
+                elif word not in dicc_words[letter]:
+                    dicc_words[letter].append(word)
+
+                if letter + str(index_letter) not in dicc_words.keys():
+                    dicc_words[letter + str(index_letter)] = []
+                    dicc_words[letter + str(index_letter)].append(word)
+                elif word not in dicc_words[letter + str(index_letter)]:
+                    dicc_words[letter + str(index_letter)].append(word)
+
+    return dicc_words
+
+
+def create_words_txt_from_csv(words_length = 5, avoid_letters = [],avoid_words = []):
 
     words = []
     with open('rae_words.csv') as csv_file:
@@ -145,7 +171,11 @@ def create_words_list_from_csv(words_length = 5, avoid_letters = [],avoid_words 
                     words.append(word)
 
 
-    return words
+    with open(f'palabras_{words_length}_letras.txt', 'w') as f:
+        f.write('\n'.join(words))
+
+
+
 
 
 def create_words_list_from_txt(words_txt,avoid_letters = [],avoid_words = []):
