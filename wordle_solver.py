@@ -105,7 +105,7 @@ class WordleSolver():
                 for letter  in word:
                     if letter in vocals:
                         vocals_n+=1
-                if vocals_n<3:
+                if vocals_n<2:
                     possible_words_vocals.append(word)
 
             possible_words = possible_words_vocals
@@ -130,12 +130,15 @@ class WordleSolver():
         for index in range(len(self.possible_words_to_fish)):
             letter_count = 0
             letters_counted = []
-            for letter in self.possible_words_to_fish[index]:
+            for pos,letter in enumerate(self.possible_words_to_fish[index]):
                 if letter in dicc_count_letters.keys():
                     if letter not in letters_counted:
                         letters_counted.append(letter)
                         letter_count += dicc_count_letters[letter]
+                    if letter + str(pos)   in dicc_count_letters.keys():
+                        letter_count += dicc_count_letters[letter+ str(pos)]
             letter_count_in_possible_words.append(letter_count)
+
 
         return order_list_using_ref(self.possible_words_to_fish, letter_count_in_possible_words)
 
