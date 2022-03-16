@@ -113,7 +113,7 @@ def read_game_daily(browser):
 
     game_html = browser.find_elements(
         By.XPATH, "//div[@class='react-card-back']/div")
-        
+
     words_length = int(len(game_html)/6)
 
     game_state = {"with_position": [], "presents": [], "not_presents": []}
@@ -162,7 +162,7 @@ def update_game_state(game_row, game_state):
             list_definitive_letters.append(letter_box["letter"])
             if letter_box["letter"] in game_state["presents"]:
                 game_state["presents"].remove(letter_box["letter"])
-            for pos in range(5):
+            for pos in range(len(game_row["boxes"])):
                 if letter_box["letter"] + str(pos) not in game_state["not_presents"] and letter_box["letter"] + str(pos) not in game_state["with_position"]:
                     game_state["not_presents"].append(
                         letter_box["letter"] + str(pos))

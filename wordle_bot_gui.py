@@ -4,7 +4,7 @@ import tkinter.font as font
 from time import sleep
 from wordle_solver import WordleSolver
 import scraper_wordle
-from utils import create_dicc_words
+from utils import create_words_list_from_txt
 import webbrowser
 
 
@@ -33,8 +33,8 @@ def play_daily():
     sleep(0.5)
     scraper_wordle.start(browser)
     sleep(0.5)
-    dicc_wordle = create_dicc_words()
-    solver_wordler = WordleSolver(dicc_wordle, parallel_sim=False)
+    words_wordle= create_words_list_from_txt("palabras_5_letras.txt")
+    solver_wordler = WordleSolver(words_wordle, parallel_sim=False)
 
     for _ in range(6):
 
@@ -67,11 +67,10 @@ def play_custom(entry):
         
         browser = scraper_wordle.open_game(entry.get())
         sleep(0.5)
-        dicc_wordle = create_dicc_words(avoid_letters=["ñ"], avoid_words=[
-                                        "zungo", "vinto", "depto", "putre", "tunja", "tupac","jordi"])
-        
 
-        solver_wordler = WordleSolver(dicc_wordle)
+        words_list = create_words_list_from_txt("palabras_5_letras.txt",avoid_letters = ["ñ"],avoid_words = ["zungo", "vinto", "depto", "putre", "tunja", "tupac","gomez","hazte","gafez"])
+
+        solver_wordler = WordleSolver(words_list,parallel_sim=False)
 
         for _ in range(6):
 
