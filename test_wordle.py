@@ -1,5 +1,5 @@
 from wordle_solver import WordleSolver
-from utils import create_dicc_words, create_all_words_test, simulate_game,prints_most_used_words
+from utils import create_words_list_from_txt, simulate_game,prints_most_used_words
 
 from random import shuffle
 import time
@@ -9,19 +9,18 @@ import time
 correct_words = []
 fail_words = []
 
-all_words = create_all_words_test()
+all_words = create_words_list_from_txt("words_5_letters.txt")
 shuffle(all_words)
 
 
 words_used = {}
 
 
-dicc_wordle = create_dicc_words()
 
 for n, word_true in enumerate(all_words):
     start = time.time()
     print("%d/%d" % (n+1, len(all_words)))
-    solver_wordler = WordleSolver(dicc_wordle, mode="slow")
+    solver_wordler = WordleSolver(all_words, mode="fast")
     print(word_true)
     guesses_words = []
     correct = False
