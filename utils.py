@@ -1,7 +1,7 @@
 import unicodedata
 import os
 import sys
-
+import csv
 
 def resource_path(relative_path):
     try:
