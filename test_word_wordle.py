@@ -8,10 +8,10 @@ word_list = create_words_list_from_txt("words_5_letters.txt")
 
 
 start = time.time()
-solver_wordler = WordleSolver(word_list, parallel_sim=True,mode = "fast",only2_vowels=True)
+solver_wordler = WordleSolver(word_list, parallel_sim=True,mode = "fast",only1_vowels=False)
 
-
-word_true = "jells"
+['gings', 'vills']
+word_true = "vills"
 
 guesses_words = []
 correct = False

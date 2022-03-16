@@ -5,7 +5,7 @@ from utils import create_words_list_from_txt,create_words_txt_from_csv
 
 
 
-WORDLE_CUSTOM = "https://mywordle.strivemath.com/?word=fscod"
+WORDLE_CUSTOM = "https://mywordle.strivemath.com/?word=rwcod"
 
 WORDLE_DAILY = "https://wordle.danielfrg.com/"
 
@@ -34,7 +34,7 @@ else:
     
     
 
-solver_wordler = WordleSolver(words_list,only2_vowels=True)
+solver_wordler = WordleSolver(words_list,only1_vowels=False)
 
 for i in range(6):
 
