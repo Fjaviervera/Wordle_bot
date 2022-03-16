@@ -10,7 +10,7 @@ num_cores = multiprocessing.cpu_count()
 
 class WordleSolver():
 
-    def __init__(self, words_list,mode = "fast",parallel_sim = True, only2_vocals = False):
+    def __init__(self, words_list,mode = "fast",parallel_sim = True, only2_vowels = False):
         
 
         self.words_length = len(words_list[0])
@@ -18,7 +18,7 @@ class WordleSolver():
         self.parallel_sim = parallel_sim
         self.words_tested = []
         self.possible_words_to_fish = self.get_possible_words(
-            {"with_position": [], "presents": [], "not_presents": []}, only2_vocals)
+            {"with_position": [], "presents": [], "not_presents": []}, only2_vowels)
 
         if mode == "slow":
             self._th_to_simulate = [1000,100]
@@ -74,7 +74,7 @@ class WordleSolver():
     def get_possible_words_to_fish(self):
         return self.possible_words_to_fish
 
-    def get_possible_words(self, game_state, only2_vocals = False):
+    def get_possible_words(self, game_state, only2_vowels = False):
 
         list_words = []
         not_list_words = []
@@ -97,7 +97,7 @@ class WordleSolver():
             possible_words = union_lists(words_reamining)
             possible_words = difference_lists(possible_words, not_list_words)
 
-        if only2_vocals:
+        if only2_vowels:
             possible_words_vocals = []
             vocals = ["a", "e", "i" , "o" , "u"]
             for word in possible_words:
