@@ -10,7 +10,7 @@ num_cores = multiprocessing.cpu_count()
 
 class WordleSolver():
 
-    def __init__(self, words_list,mode = "fast",parallel_sim = True):
+    def __init__(self, words_list,mode = "fast",parallel_sim = True, only2_vocals = False):
         
 
         self.words_length = len(words_list[0])
@@ -18,7 +18,7 @@ class WordleSolver():
         self.parallel_sim = parallel_sim
         self.words_tested = []
         self.possible_words_to_fish = self.get_possible_words(
-            {"with_position": [], "presents": [], "not_presents": []})
+            {"with_position": [], "presents": [], "not_presents": []}, only2_vocals)
 
         if mode == "slow":
             self._th_to_simulate = [1000,100]
@@ -74,7 +74,7 @@ class WordleSolver():
     def get_possible_words_to_fish(self):
         return self.possible_words_to_fish
 
-    def get_possible_words(self, game_state):
+    def get_possible_words(self, game_state, only2_vocals = False):
 
         list_words = []
         not_list_words = []
@@ -97,13 +97,28 @@ class WordleSolver():
             possible_words = union_lists(words_reamining)
             possible_words = difference_lists(possible_words, not_list_words)
 
+        if only2_vocals:
+            possible_words_vocals = []
+            vocals = ["a", "e", "i" , "o" , "u"]
+            for word in possible_words:
+                vocals_n = 0
+                for letter  in word:
+                    if letter in vocals:
+                        vocals_n+=1
+                if vocals_n<3:
+                    possible_words_vocals.append(word)
+
+            possible_words = possible_words_vocals
+
         return possible_words
 
     def get_most_possible_words_to_fish(self, word_list, avoid_letters=[]):
-
+        
         words_dicc = create_dicc_from_words(word_list, len_word=self.words_length )
         dicc_count_letters = {}
         for letter in words_dicc.keys():
+
+
             if len(letter) == 1 and letter not in avoid_letters:
 
                 dicc_count_letters[letter] = len(words_dicc[letter])

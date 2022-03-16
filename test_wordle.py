@@ -20,7 +20,7 @@ words_used = {}
 for n, word_true in enumerate(all_words):
     start = time.time()
     print("%d/%d" % (n+1, len(all_words)))
-    solver_wordler = WordleSolver(all_words, mode="fast")
+    solver_wordler = WordleSolver(all_words, mode="fast",only2_vocals=True)
     print(word_true)
     guesses_words = []
     correct = False

@@ -1,17 +1,17 @@
 from wordle_solver import WordleSolver
-from utils import create_dicc_words,simulate_game
+from utils import create_words_list_from_txt,simulate_game
 import time
 
 words_used = {}
 
-dicc_wordle = create_dicc_words()
+word_list = create_words_list_from_txt("words_5_letters.txt")
 
 
 start = time.time()
-solver_wordler = WordleSolver(dicc_wordle, parallel_sim=True,mode = "slow")
+solver_wordler = WordleSolver(word_list, parallel_sim=True,mode = "ultra-slow")
 
 
-word_true = "acudo"
+word_true = "jagas"
 
 guesses_words = []
 correct = False
