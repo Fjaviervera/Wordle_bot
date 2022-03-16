@@ -25,7 +25,7 @@ else:
     dicc_wordle = create_dicc_words(avoid_letters=["ñ"], avoid_words=[
                                     "zungo", "vinto", "depto", "putre", "tunja", "tupac","gomez","hazte","gafez"])
 
-solver_wordler = WordleSolver(dicc_wordle)
+solver_wordler = WordleSolver(dicc_wordle, mode="ultra-slow")
 
 for i in range(6):
 

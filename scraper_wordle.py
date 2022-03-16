@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from utils import resource_path
+import platform
 
 
 
@@ -20,8 +21,13 @@ def open_game(url):
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
 
     
+    if platform.system() == "Windows":
 
-    browser = webdriver.Chrome(resource_path("chromedriver_win32/chromedriver.exe"), options=options)
+        browser = webdriver.Chrome(resource_path("chromedriver_win32/chromedriver.exe"), options=options)
+    else:
+        
+        browser = webdriver.Chrome(resource_path("chromedriver_linux/chromedriver"), options=options)
+
     
     browser.get(url)
     return browser

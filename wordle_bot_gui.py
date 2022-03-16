@@ -6,8 +6,7 @@ from wordle_solver import WordleSolver
 import scraper_wordle
 from utils import create_dicc_words
 import webbrowser
-import sys
-import multiprocessing
+
 
 def on_close():
 
