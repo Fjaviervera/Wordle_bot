@@ -1,3 +1,4 @@
+from random import shuffle
 from utils import *
 
 import multiprocessing
@@ -29,6 +30,9 @@ class WordleSolver():
         elif mode == "fast":
             self._th_to_simulate = [1000,100]
             self._n_to_rank = [20,100]
+        elif mode =="dual_sim":
+            self._th_to_simulate = [1000,100]
+            self._n_to_rank = [10,20]
         else:
             print("Unrecognized mode, using fast")
             self._th_to_simulate = [1000,100]
@@ -153,6 +157,67 @@ class WordleSolver():
         results += num_possible_words - len(possible_words_simulation)
         return results
 
+    def simulate_2_round_game(self,results,candidate,target,num_possible_words):
+
+        guesses_words = self.words_tested + [candidate]
+
+        game_state = simulate_game(target, guesses_words)
+
+
+
+        possible_words_simulation = self.get_possible_words(game_state)
+
+        
+
+        if len(possible_words_simulation) > 1:
+
+            all_words_same_letters = all(set(word) == set(
+                possible_words_simulation[0]) for word in possible_words_simulation)
+
+            letters_to_avoid_count = []
+
+            if not all_words_same_letters:
+
+                for letter in game_state["with_position"]:
+                    letters_to_avoid_count.append(letter[0])
+                for letter in game_state["presents"]:
+                    if letter not in letters_to_avoid_count:
+                        letters_to_avoid_count.append(letter)
+
+                if len(possible_words_simulation) < 20:
+                    shared_letters = intersect_lists(possible_words_simulation)
+                    for letter in list(shared_letters):
+                        if letter not in letters_to_avoid_count:
+                            letters_to_avoid_count += letter
+
+            possible_words_to_fish = self.get_most_possible_words_to_fish(
+                possible_words_simulation, letters_to_avoid_count)
+
+            
+                
+
+
+
+            possible_words_to_fish = self.simulate_most_possible_words_to_fish(
+                possible_words_to_fish, possible_words_simulation, ranking=5)
+
+
+
+
+
+            for second_candidate in possible_words_to_fish[0:5]:
+
+                guesses_words = self.words_tested + [candidate] + [second_candidate]
+
+                game_state = simulate_game(target, guesses_words)
+
+                possible_words_simulation = self.get_possible_words(game_state)
+
+                results += num_possible_words - len(possible_words_simulation)
+
+        return results
+
+
     def simulate_candidate(self,candidate,possible_words):
         results = 0
 
@@ -162,10 +227,21 @@ class WordleSolver():
 
         return results
 
+    def simulate_candidate_v2(self,candidate,possible_words):
+        results = 0
+        
+        shuffle(possible_words)
+        for target in possible_words[0:100]:
+
+            results = self.simulate_2_round_game(results,candidate,target,len(possible_words))
+
+        
+        return results
+
     def simulate_most_possible_words_to_fish_parallel(self, possible_words_to_fish, possible_words, ranking):
 
 
-        list_candidates_results = Parallel(n_jobs=num_cores)(delayed(self.simulate_candidate)(candidate,possible_words) 
+        list_candidates_results = Parallel(n_jobs=num_cores)(delayed(self.simulate_candidate_v2)(candidate,possible_words) 
                                                         for candidate in possible_words_to_fish[0:ranking])
 
         words_ranked = order_list_using_ref(
