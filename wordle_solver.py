@@ -135,8 +135,8 @@ class WordleSolver():
                     if letter not in letters_counted:
                         letters_counted.append(letter)
                         letter_count += dicc_count_letters[letter]
-                    if letter + str(pos)   in dicc_count_letters.keys():
-                        letter_count += dicc_count_letters[letter+ str(pos)]
+                    # if letter + str(pos)   in dicc_count_letters.keys():
+                    #     letter_count += dicc_count_letters[letter+ str(pos)]
             letter_count_in_possible_words.append(letter_count)
 
 
